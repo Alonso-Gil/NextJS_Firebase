@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Buscar from '../UI/Buscar';
 import Navegacion from './Navegacion';
 import Link from 'next/link';
 import styled from '@emotion/styled';
 import Boton from '../UI/Boton';
+import { FirebaseContext } from '../../firebase';
 
 const ContenedorHeader = styled.div`
     max-width: 1200px;
@@ -49,7 +50,7 @@ const Navegacion_Navbar = styled.div`
 
 const Header = () => {
 
-    const usuario = false;
+    const { usuario, firebase } = useContext(FirebaseContext);
 
     return ( 
         <HeaderLine>
@@ -67,10 +68,11 @@ const Header = () => {
                 <DivSesion>
                     { usuario ? (
                         <>
-                            <SaludoUsuario>Hola Alonso</SaludoUsuario>
+                            <SaludoUsuario>Hola {usuario.displayName}</SaludoUsuario>
 
                             <Boton type="button"
                                 bgColor="true"
+                                onClick={() => firebase.cerrarSesion()}
                             >Cerrar Sesión</Boton>
                         </>
                     ) : (
